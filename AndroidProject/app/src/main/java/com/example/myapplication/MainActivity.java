@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private int seconds = 0;
     private boolean running;
 
+    // default bundle is null
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        if (savedInstanceState != null) {
+            seconds = savedInstanceState.getInt("seconds");
+            running = savedInstanceState.getBoolean("running");
+        }
         runTimer();
     }
 
@@ -44,7 +51,10 @@ public class MainActivity extends AppCompatActivity {
         seconds = 0;
     }
 
+    // todo: ROTATE DESTROYS THE ACTIVITY
     public void runTimer() {
+        // this shit complex as fuck
+
         final TextView timeView = findViewById(R.id.time_view);
 
         // handler(): schedule code to run in the future
@@ -65,8 +75,24 @@ public class MainActivity extends AppCompatActivity {
                 if (running) {
                     seconds++;
                 }
-                handler.postDelayed(this, 1000);
+
+                // run after 0 millis delay
+                handler.postDelayed(this, 0);
             }
         });
     }
+
+    // SAVE BEFORE DESTROY
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        // save values in a bundle
+
+        // save seconds
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("seconds", seconds);
+
+        // save running
+        savedInstanceState.putBoolean("running", running);
+    }
+
 }

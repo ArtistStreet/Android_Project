@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Beer Adviser</string>
+    <string name="find_beer">Find Beer</string>
+    <string name="brands">No beer selected</string>
+    <string name="hint">Enter a message</string>
+    <string-array name="beers">
+        <item>light</item>
+        <item>amber</item>
+        <item>brown</item>
+        <item>dark</item>
+    </string-array>
+    <string name="send">Send</string>
+    <string name="chooser">03102003</string>
+</resources>
